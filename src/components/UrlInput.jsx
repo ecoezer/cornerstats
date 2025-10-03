@@ -31,14 +31,17 @@ function UrlInput({ onHtmlFetched }) {
       })
 
       const responseText = await response.text()
+      console.log('API URL:', apiUrl)
       console.log('Response status:', response.status)
-      console.log('Response text:', responseText)
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()))
+      console.log('Response text (first 500 chars):', responseText.substring(0, 500))
 
       let data
       try {
         data = JSON.parse(responseText)
       } catch (parseError) {
-        throw new Error(`Server returned invalid response: ${responseText.substring(0, 100)}`)
+        console.error('JSON parse error:', parseError)
+        throw new Error(`Server returned invalid response. Status: ${response.status}, Content: ${responseText.substring(0, 100)}`)
       }
 
       if (!response.ok) {
