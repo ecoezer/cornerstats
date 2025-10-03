@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { supabase } from '../supabaseClient'
 import './UrlInput.css'
 
 function UrlInput({ onHtmlFetched }) {
@@ -24,7 +23,7 @@ function UrlInput({ onHtmlFetched }) {
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ url }),
