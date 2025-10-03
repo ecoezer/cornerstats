@@ -29,7 +29,16 @@ function UrlInput({ onHtmlFetched }) {
         body: JSON.stringify({ url }),
       })
 
-      const data = await response.json()
+      const responseText = await response.text()
+      console.log('Response status:', response.status)
+      console.log('Response text:', responseText)
+
+      let data
+      try {
+        data = JSON.parse(responseText)
+      } catch (parseError) {
+        throw new Error(`Server returned invalid response: ${responseText.substring(0, 100)}`)
+      }
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to fetch URL')
