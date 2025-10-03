@@ -18,13 +18,14 @@ function UrlInput({ onHtmlFetched }) {
     setError('')
 
     try {
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/fetch-html`
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+      const apiUrl = `${supabaseUrl.startsWith('http') ? supabaseUrl : 'https://' + supabaseUrl}/functions/v1/fetch-html`
 
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
         },
         body: JSON.stringify({ url }),
       })
